@@ -4,6 +4,7 @@ import Greet from "./components/Greet";
 import Welcome from "./components/Welcome";
 import Message from "./components/Message";
 import Counter from "./components/Counter";
+import LifeCycleA from "./components/LifeCycleA";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       <Welcome name="RiFa"></Welcome>
       <Welcome name="FloveR"></Welcome>
       <Message></Message> */}
-      <Counter></Counter>
+      {/* <Counter></Counter> */}
+      <LifeCycleA></LifeCycleA>
     </div>
   );
 }

@@ -5,14 +5,14 @@ class Counter extends Component {
     super(props);
 
     this.state = {
-      count: 0
+      count: 0,
     };
   }
 
   increment() {
     this.setState(
       {
-        count: this.state.count + 1
+        count: this.state.count + 1,
       },
       () => {
         console.log(this.state.count);
