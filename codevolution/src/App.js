@@ -5,6 +5,8 @@ import Welcome from "./components/Welcome";
 import Message from "./components/Message";
 import Counter from "./components/Counter";
 import LifeCycleA from "./components/LifeCycleA";
+import FragmentDemo from "./components/FragmentDemo";
+import Table from "./components/Table";
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
       <Welcome name="FloveR"></Welcome>
       <Message></Message> */}
       {/* <Counter></Counter> */}
-      <LifeCycleA></LifeCycleA>
+      {/* <LifeCycleA></LifeCycleA> */}
+      <FragmentDemo></FragmentDemo>
+      <Table></Table>
     </div>
   );
 }
