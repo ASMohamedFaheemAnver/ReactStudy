@@ -7,6 +7,8 @@ import Counter from "./components/Counter";
 import LifeCycleA from "./components/LifeCycleA";
 import FragmentDemo from "./components/FragmentDemo";
 import Table from "./components/Table";
+import { PureCmp } from "./components/PureCmp";
+import ParentComp from "./components/ParentComp";
 
 function App() {
   return (
@@ -21,8 +23,10 @@ function App() {
       <Message></Message> */}
       {/* <Counter></Counter> */}
       {/* <LifeCycleA></LifeCycleA> */}
-      <FragmentDemo></FragmentDemo>
-      <Table></Table>
+      {/* <FragmentDemo></FragmentDemo>
+      <Table></Table> */}
+      {/* <PureCmp></PureCmp> */}
+      {/* <ParentComp></ParentComp> */}
     </div>
   );
 }
