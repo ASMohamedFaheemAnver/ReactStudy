@@ -9,6 +9,7 @@ import FragmentDemo from "./components/FragmentDemo";
 import Table from "./components/Table";
 import { PureCmp } from "./components/PureCmp";
 import ParentComp from "./components/ParentComp";
+import RefDemo from "./components/RefDemo";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
       {/* <FragmentDemo></FragmentDemo>
       <Table></Table> */}
       {/* <PureCmp></PureCmp> */}
-      <ParentComp></ParentComp>
+      {/* <ParentComp></ParentComp> */}
+      <RefDemo></RefDemo>
     </div>
   );
 }
