@@ -26,7 +26,7 @@ function App() {
       {/* <FragmentDemo></FragmentDemo>
       <Table></Table> */}
       {/* <PureCmp></PureCmp> */}
-      {/* <ParentComp></ParentComp> */}
+      <ParentComp></ParentComp>
     </div>
   );
 }
