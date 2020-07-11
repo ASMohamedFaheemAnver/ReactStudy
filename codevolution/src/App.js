@@ -10,6 +10,7 @@ import Table from "./components/Table";
 import { PureCmp } from "./components/PureCmp";
 import ParentComp from "./components/ParentComp";
 import RefDemo from "./components/RefDemo";
+import FocusInput from "./components/FocusInput";
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
       <Table></Table> */}
       {/* <PureCmp></PureCmp> */}
       {/* <ParentComp></ParentComp> */}
-      <RefDemo></RefDemo>
+      {/* <RefDemo></RefDemo> */}
+      <FocusInput></FocusInput>
     </div>
   );
 }
