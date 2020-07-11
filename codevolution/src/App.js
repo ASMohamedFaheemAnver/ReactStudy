@@ -11,6 +11,7 @@ import { PureCmp } from "./components/PureCmp";
 import ParentComp from "./components/ParentComp";
 import RefDemo from "./components/RefDemo";
 import FocusInput from "./components/FocusInput";
+import FRParentInput from "./components/FRParentInput";
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
       {/* <PureCmp></PureCmp> */}
       {/* <ParentComp></ParentComp> */}
       {/* <RefDemo></RefDemo> */}
-      <FocusInput></FocusInput>
+      {/* <FocusInput></FocusInput> */}
+      <FRParentInput></FRParentInput>
     </div>
   );
 }
