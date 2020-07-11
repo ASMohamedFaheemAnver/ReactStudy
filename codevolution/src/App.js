@@ -12,6 +12,7 @@ import ParentComp from "./components/ParentComp";
 import RefDemo from "./components/RefDemo";
 import FocusInput from "./components/FocusInput";
 import FRParentInput from "./components/FRParentInput";
+import PortalDemo from "./components/PortalDemo";
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
       {/* <ParentComp></ParentComp> */}
       {/* <RefDemo></RefDemo> */}
       {/* <FocusInput></FocusInput> */}
-      <FRParentInput></FRParentInput>
+      {/* <FRParentInput></FRParentInput> */}
+      <PortalDemo></PortalDemo>
     </div>
   );
 }
