@@ -1,5 +1,11 @@
+import DropDown from "./DropDown";
+
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <DropDown />
+    </div>
+  );
 }
 
 export default App;
