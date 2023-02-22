@@ -40,6 +40,9 @@ const Map = ({ center, zoom, eventData }) => {
             radius: 800000,
           })
         }
+        onChange={(value) => {
+          console.log({ value });
+        }}
       >
         {markers.map((marker) => {
           return <Marker key={marker.id} lat={marker.lat} lng={marker.lng} />;
