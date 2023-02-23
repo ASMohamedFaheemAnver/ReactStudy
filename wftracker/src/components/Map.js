@@ -1,7 +1,10 @@
 import GoogleMapReact from "google-map-react";
+import { useState } from "react";
+import LocationInfoBox from "./LocationInfoBox";
 import Marker from "./Marker";
 
 const Map = ({ center, zoom, eventData }) => {
+  const [locationInfo, setLocationInfo] = useState();
   const markers = eventData
     .filter((event) => event?.categories[0]?.id === 8)
     .map((event) => {
@@ -9,6 +12,7 @@ const Map = ({ center, zoom, eventData }) => {
         id: event.id,
         lat: event.geometries[0].coordinates[1],
         lng: event.geometries[0].coordinates[0],
+        title: event.title,
       };
     });
   return (
@@ -20,13 +24,13 @@ const Map = ({ center, zoom, eventData }) => {
         }}
         defaultCenter={center}
         defaultZoom={zoom}
-        heatmap={{
-          positions: markers,
-          options: {
-            radius: 20,
-            opacity: 1,
-          },
-        }}
+        // heatmap={{
+        //   positions: markers,
+        //   options: {
+        //     radius: 20,
+        //     opacity: 1,
+        //   },
+        // }}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => {
           new maps.Circle({
@@ -59,13 +63,23 @@ const Map = ({ center, zoom, eventData }) => {
           });
         }}
         onChange={(value) => {
-          console.log({ value });
+          if (locationInfo) setLocationInfo(null);
         }}
       >
-        {/* {markers.map((marker) => {
-          return <Marker key={marker.id} lat={marker.lat} lng={marker.lng} />;
-        })} */}
+        {markers.map((marker) => {
+          return (
+            <Marker
+              onClick={() => {
+                setLocationInfo({ id: marker.id, title: marker.title });
+              }}
+              key={marker.id}
+              lat={marker.lat}
+              lng={marker.lng}
+            />
+          );
+        })}
       </GoogleMapReact>
+      {!!locationInfo && <LocationInfoBox info={locationInfo} />}
     </div>
   );
 };
