@@ -1,0 +1,2 @@
+# How to get the deleted image info inside react-quill editor
+# https://github.com/zenoamaro/react-quill/issues/708
