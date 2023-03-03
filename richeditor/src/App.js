@@ -37,6 +37,11 @@ const App = () => {
             }
           });
         },
+        // Delete
+        // We need to hold all the uploaded image urls in a variable and we can run a cron job to test is the url is still in use or not
+        // On creation server should move the image from temp to a stable path or we should allow user to add rich text once they create the post
+        // For example if we are creating a product we can have 2 steps and in first step we can ask product name quantity and then we can ask description in second step,
+        // This way we can hold the image urls inside created product
       },
     }),
     []
