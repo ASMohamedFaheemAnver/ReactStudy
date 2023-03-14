@@ -1,5 +1,7 @@
+import ReactChatUI from "./ReactChatUI";
+
 function App() {
-  return <div></div>;
+  return <ReactChatUI />;
 }
 
 export default App;
