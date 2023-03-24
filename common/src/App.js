@@ -1,15 +1,12 @@
 import { useEffect } from "react";
+import ConditionalUseEffect from "./ConditionalUseEffect";
 
 function App() {
-  useEffect(() => {
-    if (true) {
-      console.log({ msg: "mounted" });
-      return () => {
-        console.log({ msg: "unmounted" });
-      };
-    }
-  }, []);
-  return <></>;
+  return (
+    <>
+      <ConditionalUseEffect />
+    </>
+  );
 }
 
 export default App;
