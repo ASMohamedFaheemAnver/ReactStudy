@@ -10,7 +10,7 @@ function App() {
           }}
           className="div one"
         >
-          1
+          <label className="up-label">Organization</label>
         </button>
         <button
           onClick={() => {
@@ -18,7 +18,7 @@ function App() {
           }}
           className="div two"
         >
-          2
+          <label className="down-label">Humor</label>
         </button>
         <button
           onClick={() => {
@@ -26,7 +26,7 @@ function App() {
           }}
           className="div three"
         >
-          3
+          <label className="down-label">Opinions</label>
         </button>
         <button
           onClick={() => {
@@ -34,7 +34,7 @@ function App() {
           }}
           className="div four"
         >
-          4
+          <label className="down-label">Facts</label>
         </button>
         <button
           onClick={() => {
@@ -42,7 +42,7 @@ function App() {
           }}
           className="div five"
         >
-          5
+          <label className="down-label">Research</label>
         </button>
         <button
           onClick={() => {
@@ -50,7 +50,7 @@ function App() {
           }}
           className="div six"
         >
-          6
+          <label className="down-label">Rumors</label>
         </button>
       </div>
     </div>
