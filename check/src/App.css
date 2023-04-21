@@ -26,7 +26,7 @@
 
 .container .div {
   height: 50%;
-  width: 200px;
+  width: 160px;
   position: absolute;
   clip-path: polygon(100% 0, 50% 100%, 0 0);
   transform: translateX(-50%);
@@ -39,7 +39,7 @@
   font-weight: bold;
   font-family: sans-serif;
   color: #fff;
-  left: 135px;
+  left: 155px;
 }
 
 .container .one {
@@ -50,21 +50,21 @@
 }
 .container .two {
   background-color: #ff9800;
-  transform: rotate(112.5deg);
+  transform: rotate(109deg);
 }
 .container .three {
   background-color: #e91e63;
-  transform: rotate(157.5deg);
+  transform: rotate(146deg);
 }
 .container .four {
   background-color: #4caf50;
-  transform: rotate(202.5deg);
+  transform: rotate(183deg);
 }
 .container .five {
   background-color: #009688;
-  transform: rotate(247.5deg);
+  transform: rotate(217deg);
 }
-/* .container .six {
+.container .six {
   background-color: #795548;
-  transform: rotate(225deg);
-} */
+  transform: rotate(251deg);
+}

@@ -44,7 +44,14 @@ function App() {
         >
           5
         </button>
-        {/* <button class="div six">6</button> */}
+        <button
+          onClick={() => {
+            console.log({ msg: 6 });
+          }}
+          className="div six"
+        >
+          6
+        </button>
       </div>
     </div>
   );
