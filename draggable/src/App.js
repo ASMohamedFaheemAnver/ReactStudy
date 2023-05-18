@@ -12,10 +12,13 @@ function App() {
       const box = boxRef.current;
       const container = containerRef.current;
       const onMouseDown = (event) => {
-        console.log({ msg: "mousedown" });
         isGrapeRef.current = true;
         coordinatesRef.current.startX = event.clientX;
         coordinatesRef.current.startY = event.clientY;
+        console.log({
+          msg: "mousedown",
+          downCoordinates: coordinatesRef.current,
+        });
       };
       const onMouseUp = (event) => {
         console.log({
@@ -28,6 +31,17 @@ function App() {
         coordinatesRef.current.lastX = box.offsetLeft;
         coordinatesRef.current.lastY = box.offsetTop;
       };
+
+      // Scenario
+      // Box - 0,0 but overall x1,y1
+      // Clicking - Clicked position(Coordinates) x2,y2
+      // Move - Moving position x3,y3
+
+      // On move if we set x3,y3 we will end up with larger x and y
+      // Solution x3,y3 - initial clicked x2,y2 but if we leave/mouseup this somewhere
+
+      // Movement time click coordinates x4,y4(400px, 500px), movement coordinates x5,y5(405px, 505px) according to above calculation box coordinates will be (5px, 5px) which is not true therefor we need to add last time box coordinates.
+
       const onMouseMove = (event) => {
         // console.log({
         //   msg: "mousemove",
@@ -37,6 +51,7 @@ function App() {
         if (isGrapeRef.current) {
           const nextX =
             event.clientX -
+            // Subtracting initial clicking position
             coordinatesRef.current.startX +
             coordinatesRef.current.lastX;
           const nextY =
