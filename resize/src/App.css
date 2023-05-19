@@ -1,0 +1,20 @@
+.resizable {
+  /* Can be flex too, I think */
+  display: flex;
+  width: 400px;
+  height: 400px;
+  background-color: pink;
+  resize: both;
+  overflow: auto;
+}
+
+textarea {
+  resize: none;
+}
+
+p {
+  resize: both;
+  overflow: auto;
+  background-color: green;
+  padding: 5px;
+}
