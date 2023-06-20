@@ -1,2 +1,1 @@
-const imageUri = "";
-export default imageUri;
+export const imageUri = "";
