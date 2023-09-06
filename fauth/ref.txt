@@ -1,0 +1,1 @@
+# Use generatePasswordResetLink to generate a reset password link and can send email using 3rd party email providers.
