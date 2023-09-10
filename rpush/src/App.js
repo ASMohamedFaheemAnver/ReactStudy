@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import firebase from "./firebase";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const App = () => {
   useEffect(() => {
@@ -14,6 +14,10 @@ const App = () => {
       .catch((e) => {
         console.log({ e });
       });
+    const unsubscribeMessage = onMessage(messaging, (message) => {
+      console.log({ message });
+    });
+    return unsubscribeMessage;
   }, []);
   return <div></div>;
 };
