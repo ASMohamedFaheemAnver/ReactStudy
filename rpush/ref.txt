@@ -1,0 +1,5 @@
+# Module not found: Error: Package path . is not exported from package
+# https://stackoverflow.com/questions/70445014/module-not-found-error-package-path-is-not-exported-from-package
+
+# Messaging.requestPermission is not a function
+# https://stackoverflow.com/questions/71343756/messaging-requestpermission-is-not-a-function
