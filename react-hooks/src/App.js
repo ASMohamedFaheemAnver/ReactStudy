@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import HookCounterThree from "./components/HookCounterThree";
+import Closure from "./problems/Closure";
 
 function App() {
   return (
@@ -8,7 +8,8 @@ function App() {
       {/* <ClassCounter></ClassCounter> */}
       {/* <HookCounter></HookCounter> */}
       {/* <HookCounterTwo></HookCounterTwo> */}
-      <HookCounterThree></HookCounterThree>
+      {/* <HookCounterThree></HookCounterThree> */}
+      <Closure />
     </div>
   );
 }

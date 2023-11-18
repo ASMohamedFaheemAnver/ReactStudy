@@ -2,6 +2,7 @@ import ReactApexChart from "react-apexcharts";
 import monthlyAnalytics from "../monthly.json";
 import { useMemo } from "react";
 import { capitalize } from "lodash";
+import Keys from "./config";
 
 function Monthly() {
   const xAxis = [];
@@ -19,7 +20,16 @@ function Monthly() {
           if (!xAxis.includes(key)) {
             xAxis.push(key);
           }
-          const length = monthlyAnalytics[meOrYouKey][year]?.[month].length;
+          const length = monthlyAnalytics[meOrYouKey][year]?.[month]?.reduce(
+            (pv, nv) => {
+              if (nv?.includes(Keys.me)) {
+                return pv + /* nv?.split(Keys.me)?.[1]?.trim()?.length */ 1;
+              } else if (nv?.includes(Keys.you)) {
+                return pv + /* nv?.split(Keys.you)?.[1]?.trim()?.length */ 1;
+              }
+            },
+            0
+          );
           analytic.data.push({
             y: length,
             x: key,
@@ -39,7 +49,7 @@ function Monthly() {
       <ReactApexChart
         width={"100%"}
         height={"100%"}
-        type="bar"
+        type="area"
         options={{
           xaxis: {
             categories: xAxis,
