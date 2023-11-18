@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Closure from "./problems/Closure";
+import UseCallback from "./components/UseCallback";
 
 function App() {
   return (
@@ -9,7 +9,8 @@ function App() {
       {/* <HookCounter></HookCounter> */}
       {/* <HookCounterTwo></HookCounterTwo> */}
       {/* <HookCounterThree></HookCounterThree> */}
-      <Closure />
+      {/* <Closure /> */}
+      <UseCallback />
     </div>
   );
 }
