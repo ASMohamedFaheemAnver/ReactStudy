@@ -6,6 +6,8 @@ import routeFeatures from "./res.json";
 function App() {
   const { Tmapv3 } = window;
   const mapRef = useRef(null);
+  const lineStringArrayRef = useRef([]);
+  const polyLineRef = useRef(null);
   console.log({ config });
   useEffect(() => {
     // Render only 1 time
@@ -40,6 +42,49 @@ function App() {
   //   };
   //   getRoutes();
   // }, []);
+
+  const cleanTMap = () => {
+    lineStringArrayRef.current = [];
+    if (polyLineRef.current) {
+      polyLineRef.current?.setMap(null);
+    }
+  };
+
+  const { features } = routeFeatures;
+  console.log({ features });
+  useEffect(() => {
+    if (mapRef?.current) {
+      features?.map((feature) => {
+        const { geometry, properties } = feature;
+        if (geometry.type === "Point") {
+          // Show points
+        } else if (geometry.type === "LineString") {
+          // Show line string
+          for (const i in geometry.coordinates) {
+            const latLng = new Tmapv3.Point(
+              geometry.coordinates[i][0],
+              geometry.coordinates[i][1]
+            );
+            const convertedPoint =
+              new Tmapv3.Projection.convertEPSG3857ToWGS84GEO(latLng);
+            lineStringArrayRef.current.push(convertedPoint);
+          }
+        } else {
+          console.log({ msg: "unhandledType", type: geometry?.type });
+        }
+      });
+      console.log({ lineStringArray: lineStringArrayRef.current });
+      setTimeout(() => {
+        polyLineRef.current = new Tmapv3.Polyline({
+          path: lineStringArrayRef.current,
+          strokeColor: "#DD0000",
+          strokeWeight: 6,
+          map: mapRef.current,
+        });
+      }, 1000);
+      return () => cleanTMap();
+    }
+  }, [features, mapRef.current]);
 
   return (
     <div className="App">
