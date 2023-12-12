@@ -8,6 +8,7 @@ function App() {
   const mapRef = useRef(null);
   const lineStringArrayRef = useRef([]);
   const polyLineRef = useRef(null);
+  const markerRef = useRef(null);
   console.log({ config });
   useEffect(() => {
     // Render only 1 time
@@ -58,6 +59,34 @@ function App() {
         const { geometry, properties } = feature;
         if (geometry.type === "Point") {
           // Show points
+          const latLng = new Tmapv3.Point(
+            geometry.coordinates[0],
+            geometry.coordinates[1]
+          );
+          const convertedPoint =
+            new Tmapv3.Projection.convertEPSG3857ToWGS84GEO(latLng);
+
+          let icon = "/point.png";
+          let iconSize = new Tmapv3.Size(8, 8);
+          if (properties.pointType == "S") {
+            icon = "/start.png";
+            iconSize = new Tmapv3.Size(32, 32);
+          } else if (properties.pointType == "E") {
+            iconSize = new Tmapv3.Size(32, 32);
+            icon = "/end.png";
+          }
+
+          setTimeout(() => {
+            markerRef.current = new Tmapv3.Marker({
+              position: new Tmapv3.LatLng(
+                convertedPoint._lat,
+                convertedPoint._lng
+              ),
+              icon,
+              iconSize,
+              map: mapRef.current,
+            });
+          }, 2000);
         } else if (geometry.type === "LineString") {
           // Show line string
           for (const i in geometry.coordinates) {
@@ -81,7 +110,7 @@ function App() {
           strokeWeight: 6,
           map: mapRef.current,
         });
-      }, 1000);
+      }, 2000);
       return () => cleanTMap();
     }
   }, [features, mapRef.current]);
