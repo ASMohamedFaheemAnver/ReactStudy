@@ -7,8 +7,8 @@ function App() {
   const { Tmapv3 } = window;
   const mapRef = useRef(null);
   const lineStringArrayRef = useRef([]);
-  const polyLineRef = useRef(null);
-  const markerRef = useRef(null);
+  const polyLinesRef = useRef([]);
+  const markersRef = useRef([]);
   console.log({ config });
   useEffect(() => {
     // Render only 1 time
@@ -46,8 +46,17 @@ function App() {
 
   const cleanTMap = () => {
     lineStringArrayRef.current = [];
-    if (polyLineRef.current) {
-      polyLineRef.current?.setMap(null);
+    if (polyLinesRef.current.length) {
+      polyLinesRef.current?.forEach((polyLine) => {
+        polyLine?.setMap?.(null);
+      });
+      polyLinesRef.current = [];
+    }
+    if (markersRef.current.length) {
+      markersRef.current?.forEach((marker) => {
+        marker?.setMap?.(null);
+      });
+      markersRef.current = [];
     }
   };
 
@@ -77,7 +86,7 @@ function App() {
           }
 
           setTimeout(() => {
-            markerRef.current = new Tmapv3.Marker({
+            const nMarker = new Tmapv3.Marker({
               position: new Tmapv3.LatLng(
                 convertedPoint._lat,
                 convertedPoint._lng
@@ -86,6 +95,7 @@ function App() {
               iconSize,
               map: mapRef.current,
             });
+            markersRef.current.push(nMarker);
           }, 2500);
         } else if (geometry.type === "LineString") {
           // Show line string
@@ -98,22 +108,27 @@ function App() {
               new Tmapv3.Projection.convertEPSG3857ToWGS84GEO(latLng);
             lineStringArrayRef.current.push(convertedPoint);
           }
+          setTimeout(() => {
+            const nPolyLine = new Tmapv3.Polyline({
+              path: lineStringArrayRef.current,
+              strokeColor: "#DD0000",
+              strokeWeight: 6,
+              map: mapRef.current,
+            });
+            polyLinesRef.current.push(nPolyLine);
+          }, 2500);
         } else {
           console.log({ msg: "unhandledType", type: geometry?.type });
         }
       });
       console.log({ lineStringArray: lineStringArrayRef.current });
       setTimeout(() => {
-        polyLineRef.current = new Tmapv3.Polyline({
-          path: lineStringArrayRef.current,
-          strokeColor: "#DD0000",
-          strokeWeight: 6,
-          map: mapRef.current,
-        });
-      }, 2500);
+        cleanTMap();
+      }, 5000);
+
       return () => cleanTMap();
     }
-  }, [features, Tmapv3]);
+  }, [features]);
 
   return (
     <div className="App">
