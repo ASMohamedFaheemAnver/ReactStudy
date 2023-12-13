@@ -55,7 +55,7 @@ function App() {
   console.log({ features });
   useEffect(() => {
     if (mapRef?.current) {
-      features?.map((feature) => {
+      features?.forEach((feature) => {
         const { geometry, properties } = feature;
         if (geometry.type === "Point") {
           // Show points
@@ -68,10 +68,10 @@ function App() {
 
           let icon = "/point.png";
           let iconSize = new Tmapv3.Size(8, 8);
-          if (properties.pointType == "S") {
+          if (properties.pointType === "S") {
             icon = "/start.png";
             iconSize = new Tmapv3.Size(32, 32);
-          } else if (properties.pointType == "E") {
+          } else if (properties.pointType === "E") {
             iconSize = new Tmapv3.Size(32, 32);
             icon = "/end.png";
           }
@@ -86,7 +86,7 @@ function App() {
               iconSize,
               map: mapRef.current,
             });
-          }, 2000);
+          }, 2500);
         } else if (geometry.type === "LineString") {
           // Show line string
           for (const i in geometry.coordinates) {
@@ -110,10 +110,10 @@ function App() {
           strokeWeight: 6,
           map: mapRef.current,
         });
-      }, 2000);
+      }, 2500);
       return () => cleanTMap();
     }
-  }, [features, mapRef.current]);
+  }, [features, Tmapv3]);
 
   return (
     <div className="App">
