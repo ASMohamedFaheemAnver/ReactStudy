@@ -1,0 +1,21 @@
+.bottom_today {
+  -moz-transition: all 2.5s ease-in-out;
+  -webkit-transition: all 2.5s ease-in-out;
+  -o-transition: all 2.5s ease-in-out;
+  -ms-transition: all 2.5s ease-in-out;
+  transition: all 2.5s ease-in-out;
+}
+
+p {
+  -moz-transition: all 2.5s ease-in-out;
+  -webkit-transition: all 2.5s ease-in-out;
+  -o-transition: all 2.5s ease-in-out;
+  -ms-transition: all 2.5s ease-in-out;
+  transition: all 2.5s ease-in-out;
+}
+
+.bottom_today {
+  background: green;
+  height: 100vh;
+  display: flex;
+}

@@ -6,10 +6,15 @@ import routeFeatures from "./res.json";
 function App() {
   const { Tmapv3 } = window;
   const mapRef = useRef(null);
-  const lineStringArrayRef = useRef([]);
-  const polyLinesRef = useRef([]);
-  const markersRef = useRef([]);
-  console.log({ config });
+  const resultDrawArrRef = useRef([]);
+  const checkedTraffic = useRef([]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log({ config, resultDrawArrRef });
+    }, 4500);
+  }, []);
+
   useEffect(() => {
     // Render only 1 time
     if (!mapRef.current) {
@@ -45,18 +50,11 @@ function App() {
   // }, []);
 
   const cleanTMap = () => {
-    lineStringArrayRef.current = [];
-    if (polyLinesRef.current.length) {
-      polyLinesRef.current?.forEach((polyLine) => {
-        polyLine?.setMap?.(null);
+    if (resultDrawArrRef.current.length) {
+      resultDrawArrRef.current?.forEach((draw) => {
+        draw?.setMap?.(null);
       });
-      polyLinesRef.current = [];
-    }
-    if (markersRef.current.length) {
-      markersRef.current?.forEach((marker) => {
-        marker?.setMap?.(null);
-      });
-      markersRef.current = [];
+      resultDrawArrRef.current = [];
     }
   };
 
@@ -95,9 +93,10 @@ function App() {
               iconSize,
               map: mapRef.current,
             });
-            markersRef.current.push(nMarker);
+            resultDrawArrRef.current.push(nMarker);
           }, 2500);
         } else if (geometry.type === "LineString") {
+          const lineStringArray = [];
           // Show line string
           for (const i in geometry.coordinates) {
             const latLng = new Tmapv3.Point(
@@ -106,26 +105,149 @@ function App() {
             );
             const convertedPoint =
               new Tmapv3.Projection.convertEPSG3857ToWGS84GEO(latLng);
-            lineStringArrayRef.current.push(convertedPoint);
+            lineStringArray.push(convertedPoint);
           }
-          setTimeout(() => {
-            const nPolyLine = new Tmapv3.Polyline({
-              path: lineStringArrayRef.current,
-              strokeColor: "#DD0000",
-              strokeWeight: 6,
-              map: mapRef.current,
-            });
-            polyLinesRef.current.push(nPolyLine);
-          }, 2500);
+
+          const traffic = geometry?.traffic;
+          checkedTraffic.current.push(traffic);
+
+          if (checkedTraffic.current.length) {
+            let strokeColor = "#06050D";
+            if (traffic != "0") {
+              if (traffic.length) {
+                if (traffic[0][0] != 0) {
+                  var trafficObject = {};
+                  var tInfo = [];
+                  for (var z = 0; z < traffic.length; z++) {
+                    trafficObject = {
+                      startIndex: traffic[z][0],
+                      endIndex: traffic[z][1],
+                      trafficIndex: traffic[z][2],
+                    };
+                    tInfo.push(trafficObject);
+                  }
+                  var noInfomationPoint = [];
+                  for (var p = 0; p < tInfo[0].startIndex; p++) {
+                    noInfomationPoint.push(lineStringArray[p]);
+                  }
+                  console.log({ noInfomationPoint });
+                  setTimeout(() => {
+                    const nPolyLine = new Tmapv3.Polyline({
+                      path: noInfomationPoint,
+                      strokeColor: "#06050D",
+                      strokeWeight: 6,
+                      map: mapRef.current,
+                    });
+                    resultDrawArrRef.current.push(nPolyLine);
+                  }, 2500);
+                  for (var x = 0; x < tInfo.length; x++) {
+                    var sectionPoint = [];
+                    for (
+                      var y = tInfo[x].startIndex;
+                      y <= tInfo[x].endIndex;
+                      y++
+                    ) {
+                      sectionPoint.push(lineStringArray[y]);
+                    }
+                    if (tInfo[x].trafficIndex == 0) {
+                      strokeColor = "#06050D";
+                    } else if (tInfo[x].trafficIndex == 1) {
+                      strokeColor = "#61AB25";
+                    } else if (tInfo[x].trafficIndex == 2) {
+                      strokeColor = "#FFFF00";
+                    } else if (tInfo[x].trafficIndex == 3) {
+                      strokeColor = "#E87506";
+                    } else if (tInfo[x].trafficIndex == 4) {
+                      strokeColor = "#D61125";
+                    }
+                    const n2PolyLine = new Tmapv3.Polyline({
+                      path: sectionPoint,
+                      strokeColor: strokeColor,
+                      strokeWeight: 6,
+                      map: mapRef.current,
+                    });
+                    resultDrawArrRef.current.push(n2PolyLine);
+                  }
+                } else {
+                  var trafficObject = {};
+                  var tInfo = [];
+                  for (var z = 0; z < traffic.length; z++) {
+                    trafficObject = {
+                      startIndex: traffic[z][0],
+                      endIndex: traffic[z][1],
+                      trafficIndex: traffic[z][2],
+                    };
+                    tInfo.push(trafficObject);
+                  }
+
+                  for (var x = 0; x < tInfo.length; x++) {
+                    var sectionPoint = [];
+                    for (
+                      var y = tInfo[x].startIndex;
+                      y <= tInfo[x].endIndex;
+                      y++
+                    ) {
+                      sectionPoint.push(lineStringArray[y]);
+                    }
+
+                    console.log({ tInfo });
+                    console.log({ sectionPoint });
+
+                    if (tInfo[x].trafficIndex == 0) {
+                      strokeColor = "#06050D";
+                    } else if (tInfo[x].trafficIndex == 1) {
+                      strokeColor = "#61AB25";
+                    } else if (tInfo[x].trafficIndex == 2) {
+                      strokeColor = "#FFFF00";
+                    } else if (tInfo[x].trafficIndex == 3) {
+                      strokeColor = "#E87506";
+                    } else if (tInfo[x].trafficIndex == 4) {
+                      strokeColor = "#D61125";
+                    }
+                    setTimeout(() => {
+                      const n3PolyLine = new Tmapv3.Polyline({
+                        path: sectionPoint,
+                        strokeColor,
+                        strokeWeight: 6,
+                        map: mapRef.current,
+                      });
+                      resultDrawArrRef.current.push(n3PolyLine);
+                    }, 2500);
+                  }
+                }
+              } else {
+                // Working perfectly
+                setTimeout(() => {
+                  const nPolyLine = new Tmapv3.Polyline({
+                    path: lineStringArray,
+                    strokeColor: strokeColor,
+                    strokeWeight: 6,
+                    map: mapRef.current,
+                  });
+                  resultDrawArrRef.current.push(nPolyLine);
+                }, 2500);
+              }
+            } else {
+              console.log({ msg: "unhandledTraffic", traffic });
+            }
+          } else {
+            setTimeout(() => {
+              const nPolyLine = new Tmapv3.Polyline({
+                path: lineStringArray,
+                strokeColor: "#DD0000",
+                strokeWeight: 6,
+                map: mapRef.current,
+              });
+              resultDrawArrRef.current.push(nPolyLine);
+            }, 2500);
+          }
         } else {
           console.log({ msg: "unhandledType", type: geometry?.type });
         }
       });
-      console.log({ lineStringArray: lineStringArrayRef.current });
-      setTimeout(() => {
-        cleanTMap();
-      }, 5000);
-
+      // setTimeout(() => {
+      //   cleanTMap();
+      // }, 5000);
       return () => cleanTMap();
     }
   }, [features]);
