@@ -1,6 +1,6 @@
-import Text from "src/components/Text";
+import Text from "components/Text";
 import "./App.css";
-import Home from "src/pages/Home";
+import Home from "pages/Home";
 
 function App() {
   return (

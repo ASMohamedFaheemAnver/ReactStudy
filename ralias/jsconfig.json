@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": "src"
+    "baseUrl": "./src", // I guess this asking for where the App.js
+    "paths": {
+      "components/*": [
+        "./src/components/*"
+      ]
+    }
   },
   "include": [
     "src"
