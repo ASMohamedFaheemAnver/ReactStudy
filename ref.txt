@@ -3,3 +3,6 @@
 
 # To modify alias and configure absolute path for react native, use craco
 -> https://stackoverflow.com/questions/63067555/how-to-make-an-import-shortcut-alias-in-create-react-app
+
+# Paths not working with create-react-app
+-> https://stackoverflow.com/questions/60309183/react-jsconfig-json-ignores-paths
