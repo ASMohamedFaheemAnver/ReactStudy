@@ -1,2 +1,5 @@
 # https://evilmartians.com/chronicles/aborting-queries-and-mutations-in-react-apollo
 # Aborting a request
+
+# To modify alias and configure absolute path for react native, use craco
+-> https://stackoverflow.com/questions/63067555/how-to-make-an-import-shortcut-alias-in-create-react-app
