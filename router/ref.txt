@@ -1,0 +1,2 @@
+#  In addition to the answers, it should be noted that starting from react-router-dom v6, <Switch /> has been replaced by <Routes />
+-> https://stackoverflow.com/questions/66313344/react-router-whats-the-difference-between-router-and-switch
