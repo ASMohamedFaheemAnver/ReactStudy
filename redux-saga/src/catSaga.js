@@ -2,11 +2,27 @@ import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { getCatsFailure, getCatsFetch, getCatsSuccess } from "./catState";
 // takeEvery vs takeLatest : ref: https://stackoverflow.com/questions/61984294/takeevery-and-takelatest-why-when-to-use-use-simultaneously
 
+const fetchCatBreed = async () => {
+  try {
+    return await fetch("https://api.thecatapi.com/v1/breeds");
+  } catch (e) {
+    return e;
+  }
+};
+
+function* fetchCats() {
+  try {
+    const cats = yield call(fetchCatBreed);
+    const formattedCats = yield cats.json();
+    return formattedCats.slice(0, 10);
+  } catch (e) {
+    throw e;
+  }
+}
+
 function* workGetCatsFetch() {
   try {
-    const cats = yield call(() => fetch("https://api.thecatapi.com/v1/breeds"));
-    const formattedCats = yield cats.json();
-    const formattedCatsShortened = formattedCats.slice(0, 10);
+    const formattedCatsShortened = yield* fetchCats();
     yield put(getCatsSuccess(formattedCatsShortened));
   } catch (e) {
     yield put(getCatsFailure());
