@@ -22,6 +22,7 @@ function* fetchCats() {
 
 function* workGetCatsFetch() {
   try {
+    // While using typed-redux-saga we use yield* because ->  Ref: https://github.com/agiledigital/typed-redux-saga/blob/master/src/index.js
     const formattedCatsShortened = yield* fetchCats();
     yield put(getCatsSuccess(formattedCatsShortened));
   } catch (e) {
