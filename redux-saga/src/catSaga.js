@@ -15,8 +15,12 @@ function* workGetCatsFetch() {
 }
 
 function* catSaga() {
-  yield takeEvery(getCatsFetch.type, workGetCatsFetch);
+  // Combine toolkit and saga action as one
+  // yield takeEvery(getCatsFetch.type, workGetCatsFetch);
   // yield takeLatest(getCatsFetch.type, workGetCatsFetch);
+
+  // Separate saga and toolkit action types
+  yield takeLatest("catSaga/workGetCatsFetch", workGetCatsFetch);
 }
 
 export default catSaga;

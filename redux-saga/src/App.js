@@ -8,7 +8,9 @@ function App() {
   const isLoading = useSelector((state) => state.cats.isLoading);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCatsFetch());
+    // dispatch(getCatsFetch());
+    // dispatch({ type: "cats/getCatsFetch" }); // Alternatively we can specify type here for combine one
+    dispatch({ type: "catSaga/workGetCatsFetch" }); // Alternatively we can specify type here for separate one
   }, []);
 
   return (
