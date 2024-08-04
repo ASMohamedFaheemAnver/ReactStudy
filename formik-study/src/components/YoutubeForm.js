@@ -8,19 +8,41 @@ const YoutubeForm = () => {
       email: "",
       channel: "",
     },
+    onSubmit: (values) => {
+      console.log({ values });
+    },
+    validate: (values) => {
+      // errors.name, errors.email, errors.channel should defined for error tracking
+      const errors = {};
+      if (!values.name) {
+        errors.name = "Required name";
+      }
+      if (!values.email) {
+        errors.email = "Required email";
+      }
+      if (!values.channel) {
+        errors.channel = "Required channel";
+      }
+      return errors;
+    },
   });
 
   return (
     <div>
-      <form /*method="GET"*/>
+      <form /*method="GET"*/ onSubmit={formik.handleSubmit}>
         <label htmlFor="name">Name</label>
         <input
           type="text"
           id="name"
           name="name"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.name}
         />
+        {formik.touched.name && (
+          <span style={{ color: "red" }}>{formik.errors.name}</span>
+        )}
+
         <label htmlFor="email">Email</label>
         <input
           type="text"
@@ -28,18 +50,30 @@ const YoutubeForm = () => {
           name="email"
           // onChange={(e) => formik.handleChange("email")(e?.target?.value)}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.email}
         />
+
+        {formik.touched.email && (
+          <span style={{ color: "red" }}>{formik.errors.email}</span>
+        )}
+
         <label htmlFor="channel">Channel</label>
         <input
           type="text"
           id="channel"
           name="channel"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.channel}
         />
 
-        <button>Submit</button>
+        {formik.touched.channel && (
+          <span style={{ color: "red" }}>{formik.errors.channel}</span>
+        )}
+        <div>
+          <button type="submit">Submit</button>
+        </div>
       </form>
     </div>
   );
