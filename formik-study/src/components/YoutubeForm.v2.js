@@ -1,5 +1,6 @@
 import {
   ErrorMessage,
+  FastField,
   Field,
   FieldArray,
   Form,
@@ -87,12 +88,14 @@ const YoutubeForm = () => {
 
         <div className="form-control">
           <label htmlFor="address">Address</label>
-          <Field name="address">
+          {/* Will not re render if other input changes */}
+          <FastField name="address">
             {(props) => {
               const { field, form, meta } = props;
+              console.log({ field });
               return <input type="text" {...field} id="address" />;
             }}
-          </Field>
+          </FastField>
           <ErrorMessage name="address" />
         </div>
 
