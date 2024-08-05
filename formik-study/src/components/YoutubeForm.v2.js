@@ -39,7 +39,13 @@ const YoutubeForm = () => {
     phNumbers: [""],
   };
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
+    // Simulating api call
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
     console.log({ values });
   };
 
@@ -59,6 +65,7 @@ const YoutubeForm = () => {
       // validateOnMount
     >
       {(formik) => {
+        console.log(formik.isSubmitting);
         return (
           <Form /*method="GET"*/>
             <div className="form-control">
@@ -176,7 +183,9 @@ const YoutubeForm = () => {
               <button
                 type="submit"
                 // dirty && valid then submit otherwise don't
-                disabled={!(formik.isValid && formik.dirty)}
+                disabled={
+                  !(formik.isValid && formik.dirty) || formik.isSubmitting
+                }
               >
                 Submit
               </button>
