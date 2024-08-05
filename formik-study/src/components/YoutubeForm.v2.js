@@ -7,12 +7,16 @@ const YoutubeForm = () => {
     name: Yup.string().required(),
     email: Yup.string().email().required(),
     channel: Yup.string().required(),
+    comments: Yup.string().required(),
+    address: Yup.string().required(),
   });
 
   const initialValues = {
     name: "",
     email: "",
     channel: "",
+    comments: "",
+    address: "",
   };
 
   const onSubmit = (values) => {
@@ -26,21 +30,50 @@ const YoutubeForm = () => {
       onSubmit={onSubmit}
     >
       <Form /*method="GET"*/>
-        <label htmlFor="name">Name</label>
-        <Field type="text" id="name" name="name" />
-        <ErrorMessage name="name" />
+        <div className="form-control">
+          <label htmlFor="name">Name</label>
+          <Field type="text" id="name" name="name" />
+          <ErrorMessage name="name" />
+        </div>
 
-        <label htmlFor="email">Email</label>
-        <Field type="text" id="email" name="email" />
-        <ErrorMessage name="email" />
+        <div className="form-control">
+          <label htmlFor="email">Email</label>
+          <Field type="text" id="email" name="email" />
+          <ErrorMessage name="email" />
+        </div>
 
-        <label htmlFor="channel">Channel</label>
-        <Field type="text" id="channel" name="channel" />
-        <ErrorMessage
-          name="channel"
-          render={(errorMessage) => <p>{errorMessage}</p>}
-        />
-        <div>
+        <div className="form-control">
+          <label htmlFor="channel">Channel</label>
+          <Field
+            type="text"
+            id="channel"
+            name="channel"
+            placeholder="Enter your youtube channel name"
+          />
+          <ErrorMessage
+            name="channel"
+            render={(errorMessage) => <p>{errorMessage}</p>}
+          />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="comments">Comments</label>
+          <Field as="textarea" type="text" id="comments" name="comments" />
+          <ErrorMessage name="comments" />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="address">Address</label>
+          <Field name="address">
+            {(props) => {
+              const { field, form, meta } = props;
+              return <input type="text" {...field} id="address" />;
+            }}
+          </Field>
+          <ErrorMessage name="address" />
+        </div>
+
+        <div className="form-control">
           <button type="submit">Submit</button>
         </div>
       </Form>
