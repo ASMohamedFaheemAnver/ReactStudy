@@ -65,14 +65,14 @@ const YoutubeForm = () => {
     phNumbers: ["10"],
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values, formik) => {
     // Simulating api call
     await new Promise((resolve) => {
       setTimeout(() => {
         resolve();
       }, 2000);
     });
-    console.log({ values });
+    formik.resetForm();
   };
 
   const validateComments = (value) => {
