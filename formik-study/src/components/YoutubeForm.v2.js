@@ -14,6 +14,7 @@ const YoutubeForm = () => {
       facebook: Yup.string().required(),
       twitter: Yup.string().required(),
     }),
+    phoneNumbers: Yup.array(Yup.string().required()).required(),
   });
 
   const initialValues = {
@@ -26,6 +27,7 @@ const YoutubeForm = () => {
       facebook: "",
       twitter: "",
     },
+    phoneNumbers: ["", ""],
   };
 
   const onSubmit = (values) => {
@@ -97,6 +99,19 @@ const YoutubeForm = () => {
           <Field type="text" id="twitter" name="social.twitter" />
           <ErrorMessage name="social.twitter" />
         </div>
+
+        <div className="form-control">
+          <label htmlFor="primaryPhone">Primary phone</label>
+          <Field type="text" id="primaryPhone" name="phoneNumbers[0]" />
+          <ErrorMessage name="phoneNumbers[0]" />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="secondaryPhone">Secondary phone</label>
+          <Field type="text" id="secondaryPhone" name="phoneNumbers[1]" />
+          <ErrorMessage name="phoneNumbers[1]" />
+        </div>
+
         <div className="form-control">
           <button type="submit">Submit</button>
         </div>
