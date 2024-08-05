@@ -58,99 +58,132 @@ const YoutubeForm = () => {
       // validateOnBlur={false}
       // validateOnMount
     >
-      <Form /*method="GET"*/>
-        <div className="form-control">
-          <label htmlFor="name">Name</label>
-          <Field type="text" id="name" name="name" />
-          <ErrorMessage name="name" component={TextError} />
-        </div>
+      {(formik) => {
+        return (
+          <Form /*method="GET"*/>
+            <div className="form-control">
+              <label htmlFor="name">Name</label>
+              <Field type="text" id="name" name="name" />
+              <ErrorMessage name="name" component={TextError} />
+            </div>
 
-        <div className="form-control">
-          <label htmlFor="email">Email</label>
-          <Field type="text" id="email" name="email" />
-          <ErrorMessage name="email">
-            {(errorMessage) => {
-              return <TextError>{errorMessage}</TextError>;
-            }}
-          </ErrorMessage>
-        </div>
+            <div className="form-control">
+              <label htmlFor="email">Email</label>
+              <Field type="text" id="email" name="email" />
+              <ErrorMessage name="email">
+                {(errorMessage) => {
+                  return <TextError>{errorMessage}</TextError>;
+                }}
+              </ErrorMessage>
+            </div>
 
-        <div className="form-control">
-          <label htmlFor="channel">Channel</label>
-          <Field
-            type="text"
-            id="channel"
-            name="channel"
-            placeholder="Enter your youtube channel name"
-          />
-          <ErrorMessage
-            name="channel"
-            render={(errorMessage) => <p>{errorMessage}</p>}
-          />
-        </div>
+            <div className="form-control">
+              <label htmlFor="channel">Channel</label>
+              <Field
+                type="text"
+                id="channel"
+                name="channel"
+                placeholder="Enter your youtube channel name"
+              />
+              <ErrorMessage
+                name="channel"
+                render={(errorMessage) => <p>{errorMessage}</p>}
+              />
+            </div>
 
-        <div className="form-control">
-          <label htmlFor="comments">Comments</label>
-          <Field
-            as="textarea"
-            type="text"
-            id="comments"
-            name="comments"
-            validate={validateComments}
-          />
-          <ErrorMessage name="comments" />
-        </div>
+            <div className="form-control">
+              <label htmlFor="comments">Comments</label>
+              <Field
+                as="textarea"
+                type="text"
+                id="comments"
+                name="comments"
+                validate={validateComments}
+              />
+              <ErrorMessage name="comments" />
+            </div>
 
-        <div className="form-control">
-          <label htmlFor="address">Address</label>
-          {/* Will not re render if other input changes */}
-          <FastField name="address">
-            {(props) => {
-              const { field, form, meta } = props;
-              console.log({ field });
-              return <input type="text" {...field} id="address" />;
-            }}
-          </FastField>
-          <ErrorMessage name="address" />
-        </div>
+            <div className="form-control">
+              <label htmlFor="address">Address</label>
+              {/* Will not re render if other input changes */}
+              <FastField name="address">
+                {(props) => {
+                  const { field, form, meta } = props;
+                  console.log({ field });
+                  return <input type="text" {...field} id="address" />;
+                }}
+              </FastField>
+              <ErrorMessage name="address" />
+            </div>
 
-        <div className="form-control">
-          <label htmlFor="facbook">Facebook profile</label>
-          <Field type="text" id="facebook" name="social.facebook" />
-          <ErrorMessage name="social.facebook" />
-        </div>
+            <div className="form-control">
+              <label htmlFor="facbook">Facebook profile</label>
+              <Field type="text" id="facebook" name="social.facebook" />
+              <ErrorMessage name="social.facebook" />
+            </div>
 
-        <div className="form-control">
-          <label htmlFor="twitter">Twitter profile</label>
-          <Field type="text" id="twitter" name="social.twitter" />
-          <ErrorMessage name="social.twitter" />
-        </div>
+            <div className="form-control">
+              <label htmlFor="twitter">Twitter profile</label>
+              <Field type="text" id="twitter" name="social.twitter" />
+              <ErrorMessage name="social.twitter" />
+            </div>
 
-        <div className="form-control">
-          <label htmlFor="primaryPhone">Primary phone</label>
-          <Field type="text" id="primaryPhone" name="phoneNumbers[0]" />
-          <ErrorMessage name="phoneNumbers[0]" />
-        </div>
+            <div className="form-control">
+              <label htmlFor="primaryPhone">Primary phone</label>
+              <Field type="text" id="primaryPhone" name="phoneNumbers[0]" />
+              <ErrorMessage name="phoneNumbers[0]" />
+            </div>
 
-        <div className="form-control">
-          <label htmlFor="secondaryPhone">Secondary phone</label>
-          <Field type="text" id="secondaryPhone" name="phoneNumbers[1]" />
-          <ErrorMessage name="phoneNumbers[1]" />
-        </div>
+            <div className="form-control">
+              <label htmlFor="secondaryPhone">Secondary phone</label>
+              <Field type="text" id="secondaryPhone" name="phoneNumbers[1]" />
+              <ErrorMessage name="phoneNumbers[1]" />
+            </div>
 
-        <div className="form-control">
-          <label>List of phone number</label>
-          <FieldArray name="phNumbers">
-            {(fieldArrayProps) => {
-              return <MemoizedComponent {...fieldArrayProps} />;
-            }}
-          </FieldArray>
-        </div>
+            <div className="form-control">
+              <label>List of phone number</label>
+              <FieldArray name="phNumbers">
+                {(fieldArrayProps) => {
+                  return <MemoizedComponent {...fieldArrayProps} />;
+                }}
+              </FieldArray>
+            </div>
 
-        <div className="form-control">
-          <button type="submit">Submit</button>
-        </div>
-      </Form>
+            <div className="form-control">
+              <button
+                type="button"
+                onClick={() => {
+                  formik.setFieldTouched("comments", true);
+                  formik.validateField("comments");
+                }}
+              >
+                Validate comments
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  formik.setTouched({
+                    name: true,
+                    address: true,
+                    channel: true,
+                    comments: true,
+                  });
+                  formik.validateForm();
+                }}
+              >
+                Validate all
+              </button>
+              <button
+                type="submit"
+                // dirty && valid then submit otherwise don't
+                disabled={!(formik.isValid && formik.dirty)}
+              >
+                Submit
+              </button>
+            </div>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };
