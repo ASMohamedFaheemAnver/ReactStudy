@@ -7,13 +7,17 @@ import {
   Formik,
   useFormik,
 } from "formik";
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import * as Yup from "yup";
 import TextError from "./TextError";
 
 const YoutubeForm = () => {
+  const [dynamicValidation, setDynamicValidation] = useState(
+    Yup.string().required()
+  );
+
   const validationSchema = Yup.object({
-    name: Yup.string().required(),
+    name: dynamicValidation,
     email: Yup.string().email().required(),
     channel: Yup.string().required(),
     // comments: Yup.string().required(), // Manual validation done below
@@ -24,6 +28,12 @@ const YoutubeForm = () => {
     }),
     phoneNumbers: Yup.array(Yup.string().required()).required(),
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDynamicValidation(Yup.string().min(10).required());
+    }, 5000);
+  }, []);
 
   const initialValues = {
     name: "",
@@ -37,6 +47,22 @@ const YoutubeForm = () => {
     },
     phoneNumbers: ["", ""],
     phNumbers: [""],
+  };
+
+  const [formState, setFormState] = useState(null);
+
+  const savedValues = {
+    name: "1",
+    email: "faheem@nimidev.com",
+    channel: "3",
+    comments: "4",
+    address: "5",
+    social: {
+      facebook: "6",
+      twitter: "7",
+    },
+    phoneNumbers: ["8", "9"],
+    phNumbers: ["10"],
   };
 
   const onSubmit = async (values) => {
@@ -57,9 +83,10 @@ const YoutubeForm = () => {
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formState || initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
       // validateOnChange={false}
       // validateOnBlur={false}
       // validateOnMount
@@ -179,6 +206,9 @@ const YoutubeForm = () => {
                 }}
               >
                 Validate all
+              </button>
+              <button type="button" onClick={() => setFormState(savedValues)}>
+                Load saved data
               </button>
               <button
                 type="submit"
