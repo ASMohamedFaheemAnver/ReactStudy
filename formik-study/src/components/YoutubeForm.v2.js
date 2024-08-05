@@ -10,6 +10,10 @@ const YoutubeForm = () => {
     channel: Yup.string().required(),
     comments: Yup.string().required(),
     address: Yup.string().required(),
+    social: Yup.object().shape({
+      facebook: Yup.string().required(),
+      twitter: Yup.string().required(),
+    }),
   });
 
   const initialValues = {
@@ -18,6 +22,10 @@ const YoutubeForm = () => {
     channel: "",
     comments: "",
     address: "",
+    social: {
+      facebook: "",
+      twitter: "",
+    },
   };
 
   const onSubmit = (values) => {
@@ -78,6 +86,17 @@ const YoutubeForm = () => {
           <ErrorMessage name="address" />
         </div>
 
+        <div className="form-control">
+          <label htmlFor="facbook">Facebook profile</label>
+          <Field type="text" id="facebook" name="social.facebook" />
+          <ErrorMessage name="social.facebook" />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="twitter">Twitter profile</label>
+          <Field type="text" id="twitter" name="social.twitter" />
+          <ErrorMessage name="social.twitter" />
+        </div>
         <div className="form-control">
           <button type="submit">Submit</button>
         </div>
