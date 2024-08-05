@@ -7,7 +7,7 @@ import {
   Formik,
   useFormik,
 } from "formik";
-import React from "react";
+import React, { memo } from "react";
 import * as Yup from "yup";
 import TextError from "./TextError";
 
@@ -127,32 +127,7 @@ const YoutubeForm = () => {
           <label>List of phone number</label>
           <FieldArray name="phNumbers">
             {(fieldArrayProps) => {
-              const { push, remove, insert, form } = fieldArrayProps;
-              const { values } = form;
-              const { phNumbers } = values;
-              return (
-                <div>
-                  {phNumbers?.map((phNumber, index) => {
-                    return (
-                      <div key={index}>
-                        <Field name={`phNumbers[${index}]`} />
-                        <button type="button" onClick={() => remove(index)}>
-                          -
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => insert(index + 1, "")}
-                        >
-                          +
-                        </button>
-                      </div>
-                    );
-                  })}
-                  <button type="button" onClick={() => push("")}>
-                    +
-                  </button>
-                </div>
-              );
+              return <MemoizedComponent {...fieldArrayProps} />;
             }}
           </FieldArray>
         </div>
@@ -164,5 +139,43 @@ const YoutubeForm = () => {
     </Formik>
   );
 };
+
+const MemoizedComponent = memo(
+  (fieldArrayProps) => {
+    const { push, remove, insert, form } = fieldArrayProps;
+    const { values } = form;
+    const { phNumbers } = values;
+    console.log({ msg: "Rendering :(" });
+    return (
+      <div>
+        {phNumbers?.map((phNumber, index) => {
+          return (
+            <div key={index}>
+              <Field name={`phNumbers[${index}]`} />
+              <button type="button" onClick={() => remove(index)}>
+                -
+              </button>
+              <button type="button" onClick={() => insert(index + 1, "")}>
+                +
+              </button>
+            </div>
+          );
+        })}
+        <button type="button" onClick={() => push("")}>
+          +
+        </button>
+      </div>
+    );
+  },
+  (preProps, nextProps) => {
+    const pPhNumbers = preProps?.form?.values?.phNumbers;
+    const nPhNumbers = nextProps?.form?.values?.phNumbers;
+    if (JSON.stringify(pPhNumbers) === JSON.stringify(nPhNumbers)) {
+      return true; // Done re render
+    }
+
+    return false; // Re render
+  }
+);
 
 export default YoutubeForm;
